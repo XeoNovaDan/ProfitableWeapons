@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <AllowScavengedWeapons.label>略奪を許す</AllowScavengedWeapons.label>
+    <AllowScavengedWeapons.description>（盗む）でマークされた武器を許可する。</AllowScavengedWeapons.description>
+
+</LanguageData>

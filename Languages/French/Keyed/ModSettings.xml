@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+    <SettingFlagInventoryWeapons>Armes d'inventaire de drapeau</SettingFlagInventoryWeapons>
+    <SettingFlagInventoryWeaponsToolTip>Si cette option est activée, les armes abandonnées à partir d'inventaires de pions non-joueurs (par exemple les fournisseurs de combat) seront marquées comme «butin».</SettingFlagInventoryWeaponsToolTip>
+
+    <SettingScavengeSellMultFactor>Butin multiplicateur de prix de vente</SettingScavengeSellMultFactor>
+    <SettingScavengeSellMultFactorToolTip>Lorsqu'une arme est marquée comme «butin», son multiplicateur de prix de vente est multiplié par cette valeur.\n\nBesoin de redémarrer le jeu pour que cela prenne effet</SettingScavengeSellMultFactorToolTip>
+
+</LanguageData>

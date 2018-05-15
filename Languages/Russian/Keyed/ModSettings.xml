@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+    <SettingFlagInventoryWeapons>Отметьте оружие, которое выпадает из инвентаря</SettingFlagInventoryWeapons>
+    <SettingFlagInventoryWeaponsToolTip>Если это разрешено, оружие, выпавшее из инвентаря пешки без игрока (например, боевые поставщики), будет помечено как «разграблено».</SettingFlagInventoryWeaponsToolTip>
+
+    <SettingScavengeSellMultFactor>Множитель продажной цены украденного оружия</SettingScavengeSellMultFactor>
+    <SettingScavengeSellMultFactorToolTip>Когда оружие получает маркировку «разграблено», их множитель цены продажи умножается на это значение.\n\nПерезапустите игру для внесения изменений</SettingScavengeSellMultFactorToolTip>
+
+</LanguageData>

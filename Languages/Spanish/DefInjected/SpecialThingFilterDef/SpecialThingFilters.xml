@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <AllowScavengedWeapons.label>permitir botín</AllowScavengedWeapons.label>
+    <AllowScavengedWeapons.description>Permitir armas que están marcadas con (S).</AllowScavengedWeapons.description>
+
+</LanguageData>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+    <SettingFlagInventoryWeapons>Flag inventory weapons</SettingFlagInventoryWeapons>
+    <SettingFlagInventoryWeaponsToolTip>If enabled, weapons dropped from non-player pawn inventories (e.g. combat suppliers) will be marked as 'scavenged'.</SettingFlagInventoryWeaponsToolTip>
+
+    <SettingScavengeSellMultFactor>Scavenged sell multiplier factor</SettingScavengeSellMultFactor>
+    <SettingScavengeSellMultFactorToolTip>When a weapon gets marked as 'scavenged', their sell price multiplier is multiplied by this value.\n\nRequires restart to take effect.</SettingScavengeSellMultFactorToolTip>
+
+</LanguageData>

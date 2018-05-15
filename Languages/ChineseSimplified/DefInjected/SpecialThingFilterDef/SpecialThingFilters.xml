@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <AllowScavengedWeapons.label>允许战利品</AllowScavengedWeapons.label>
+    <AllowScavengedWeapons.description>标有（抢劫）的武器是允许的。</AllowScavengedWeapons.description>
+
+</LanguageData>

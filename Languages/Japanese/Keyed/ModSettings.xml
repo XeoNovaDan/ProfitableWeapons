@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+    <SettingFlagInventoryWeapons>フラグインベントリ兵器</SettingFlagInventoryWeapons>
+    <SettingFlagInventoryWeaponsToolTip>有効にすると、プレイヤー以外のポーンのインベントリ（戦闘サプライヤなど）からドロップされた武器は「戦利品」としてマークされます。</SettingFlagInventoryWeaponsToolTip>
+
+    <SettingScavengeSellMultFactor>ブーティー販売価格倍率</SettingScavengeSellMultFactor>
+    <SettingScavengeSellMultFactorToolTip>武器が「戦利品」としてマークされると、売り価格倍率にこの値が乗算されます。\n\n変更を有効にするためにゲームを再起動する</SettingScavengeSellMultFactorToolTip>
+
+</LanguageData>

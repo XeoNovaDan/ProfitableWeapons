@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+    <AllowScavengedWeapons.label>хранить разграбленное оружие</AllowScavengedWeapons.label>
+    <AllowScavengedWeapons.description>Разрешить оружие, отмеченное (S).</AllowScavengedWeapons.description>
+
+</LanguageData>

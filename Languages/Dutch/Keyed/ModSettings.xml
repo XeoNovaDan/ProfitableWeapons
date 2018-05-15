@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+    <SettingFlagInventoryWeapons>Vlag inventaris wapens</SettingFlagInventoryWeapons>
+    <SettingFlagInventoryWeaponsToolTip>Indien ingeschakeld, zullen wapens die zijn gevallen uit niet-speler kolonist of dierlijke inventarissen (bijvoorbeeld gevechtsleveranciers) worden gemarkeerd als 'buit'.</SettingFlagInventoryWeaponsToolTip>
+
+    <SettingScavengeSellMultFactor>Verkoopprijs multiplier geplunderd</SettingScavengeSellMultFactor>
+    <SettingScavengeSellMultFactorToolTip>Wanneer een wapen als 'buit' wordt gemarkeerd, wordt zijn multiplier voor de verkoopprijs vermenigvuldigd met deze waarde.\n\nVereist herstart om van kracht te worden.</SettingScavengeSellMultFactorToolTip>
+
+</LanguageData>

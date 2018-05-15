@@ -1,0 +1,9 @@
+E:\Documents\My RimWorld Mods\B18\ProfitableWeapons\Assemblies\ProfitableWeapons.dll
+E:\Documents\My RimWorld Mods\B18\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojResolveAssemblyReference.cache
+E:\Documents\My RimWorld Mods\B18\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
+E:\Documents\My RimWorld Mods\B18\ViableWeaponEconomy\Assemblies\ProfitableWeapons.dll
+E:\Documents\My RimWorld Mods\B18\ViableWeaponEconomy\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojResolveAssemblyReference.cache
+E:\Documents\My RimWorld Mods\B18\ViableWeaponEconomy\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
+E:\Documents\My RimWorld Mods\B18\ViableWeaponTrading\Assemblies\ProfitableWeapons.dll
+E:\Documents\My RimWorld Mods\B18\ViableWeaponTrading\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojResolveAssemblyReference.cache
+E:\Documents\My RimWorld Mods\B18\ViableWeaponTrading\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll

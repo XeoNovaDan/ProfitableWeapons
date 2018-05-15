@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+
+    <SettingFlagInventoryWeapons>Armas de inventario de bandera</SettingFlagInventoryWeapons>
+    <SettingFlagInventoryWeaponsToolTip>Si está habilitado, las armas que se retiren de los inventarios de peones que no sean jugadores (por ejemplo, proveedores de combate) se marcarán como "botín".</SettingFlagInventoryWeaponsToolTip>
+
+    <SettingScavengeSellMultFactor>Multiplicador de precio de venta de armas saqueadas</SettingScavengeSellMultFactor>
+    <SettingScavengeSellMultFactorToolTip>Cuando un arma se marca como 'botín', su multiplicador de precio de venta se multiplica por este valor.\n\nReiniciar el juego para que los cambios surtan efecto</SettingScavengeSellMultFactorToolTip>
+
+</LanguageData>
