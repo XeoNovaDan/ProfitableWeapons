@@ -7,4 +7,8 @@
     <SettingScavengeSellMultFactor>Scavenged sell multiplier factor</SettingScavengeSellMultFactor>
     <SettingScavengeSellMultFactorToolTip>When a weapon gets marked as 'scavenged', their sell price multiplier is multiplied by this value.\n\nRequires restart to take effect.</SettingScavengeSellMultFactorToolTip>
 
+    <MendingIsNotActive>Mending is currently not active.</MendingIsNotActive>
+    <MendingRemoveScavengedFlag>Remove 'scavenged' tag from mended weapons</MendingRemoveScavengedFlag>
+    <MendingRemoveScavengedFlagToolTip>If a weapon gets mended at a mending station, its 'scavenged' tag will be removed in a similar fashion to deadman's apparel.</MendingRemoveScavengedFlagToolTip>
+
 </LanguageData>

@@ -38,6 +38,11 @@ namespace ProfitableWeapons
             }
         }
 
+        public void RemoveScavengedWeaponFlag()
+        {
+            isScavengedWeaponInt = false;
+        }
+
         public override string TransformLabel(string label)
         {
             if (isScavengedWeaponInt)

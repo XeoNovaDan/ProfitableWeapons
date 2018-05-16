@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+    <AllowNonScavengedWeapons.label>permitir no botín</AllowScavengedWeapons.label>
+    <AllowNonScavengedWeapons.description>Permitir armas que no estén marcadas con (S).</AllowScavengedWeapons.description>
+
     <AllowScavengedWeapons.label>permitir botín</AllowScavengedWeapons.label>
     <AllowScavengedWeapons.description>Permitir armas que están marcadas con (S).</AllowScavengedWeapons.description>
 

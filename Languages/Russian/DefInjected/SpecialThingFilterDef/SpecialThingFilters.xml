@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+    <AllowNonScavengedWeapons.label>разрешить оружие, которое не разграблено</AllowScavengedWeapons.label>
+    <AllowNonScavengedWeapons.description>Разрешить оружие, которое не отмечено (S).</AllowScavengedWeapons.description>
+
     <AllowScavengedWeapons.label>хранить разграбленное оружие</AllowScavengedWeapons.label>
     <AllowScavengedWeapons.description>Разрешить оружие, отмеченное (S).</AllowScavengedWeapons.description>
 

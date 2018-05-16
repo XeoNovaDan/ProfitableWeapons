@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
+    <AllowNonScavengedWeapons.label>允许非奖杯</AllowScavengedWeapons.label>
+    <AllowNonScavengedWeapons.description>没有标记（战利品）的武器是允许的。</AllowScavengedWeapons.description>
+
     <AllowScavengedWeapons.label>允许战利品</AllowScavengedWeapons.label>
     <AllowScavengedWeapons.description>标有（抢劫）的武器是允许的。</AllowScavengedWeapons.description>
 

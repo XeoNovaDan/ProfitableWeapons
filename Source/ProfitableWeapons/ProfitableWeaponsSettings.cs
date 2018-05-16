@@ -20,6 +20,10 @@ namespace ProfitableWeapons
         public static float scavengeSellMultFactor = 0.25f;
         #endregion
 
+        #region
+        public static bool mendingRemoveScavengedFlag = false;
+        #endregion
+
         public void DoWindowContents(Rect wrect)
         {
             Listing_Standard options = new Listing_Standard();
@@ -33,6 +37,21 @@ namespace ProfitableWeapons
             options.CheckboxLabeled("SettingFlagInventoryWeapons".Translate(), ref flagInventoryWeapons, "SettingFlagInventoryWeaponsToolTip".Translate());
             options.Gap();
             options.SliderLabeled("SettingScavengeSellMultFactor".Translate(), ref scavengeSellMultFactor, scavengeSellMultFactor.ToStringPercent(), 0, 1, "SettingScavengeSellMultFactorToolTip".Translate());
+            options.Gap();
+            Text.Font = GameFont.Medium;
+            options.Label("Mending (functionality not yet implemented)");
+            Text.Font = GameFont.Small;
+            options.Gap(6);
+            if (ModCompatibilityCheck.MendingIsActive)
+            {
+                options.CheckboxLabeled("MendingRemoveScavengedFlag".Translate(), ref mendingRemoveScavengedFlag, "MendingRemoveScavengedFlagToolTip".Translate());
+            }
+            else
+            {
+                GUI.color = Color.grey;
+                options.Label("MendingIsNotActive".Translate());
+                GUI.color = defaultColor;
+            }
 
             options.End();
 
@@ -44,6 +63,7 @@ namespace ProfitableWeapons
         {
             Scribe_Values.Look(ref flagInventoryWeapons, "flagInventoryWeapons", true);
             Scribe_Values.Look(ref scavengeSellMultFactor, "scavengeSellMultFactor", 0.25f);
+            Scribe_Values.Look(ref mendingRemoveScavengedFlag, "mendingRemoveScavengedFlag", false);
         }
 
     }
@@ -57,7 +77,7 @@ namespace ProfitableWeapons
             GetSettings<ProfitableWeaponsSettings>();
         }
 
-        public override string SettingsCategory() => "Viable Weapon Economy";
+        public override string SettingsCategory() => "Viable Weapon Trading";
 
         public override void DoSettingsWindowContents(Rect inRect)
         {

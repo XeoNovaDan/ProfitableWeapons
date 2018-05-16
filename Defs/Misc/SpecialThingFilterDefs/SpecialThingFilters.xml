@@ -2,6 +2,16 @@
 <Defs>
 
     <SpecialThingFilterDef>
+        <defName>AllowNonScavengedWeapons</defName>
+        <label>allow non-scavenged</label>
+        <description>Allow weapons that are not marked with (S).</description>
+        <parentCategory>Weapons</parentCategory>
+        <allowedByDefault>true</allowedByDefault>
+        <saveKey>allowNonScavengedWeapons</saveKey>
+        <workerClass>ProfitableWeapons.SpecialThingFilterWorker_NonScavengedWeapon</workerClass>
+    </SpecialThingFilterDef>
+
+    <SpecialThingFilterDef>
         <defName>AllowScavengedWeapons</defName>
         <label>allow scavenged</label>
         <description>Allow weapons that are marked with (S).</description>
