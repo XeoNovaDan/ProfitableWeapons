@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Linq;
 using System.Text;
+using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using RimWorld;
 using Verse;
+using Verse.AI;
 using Harmony;
 
 namespace ProfitableWeapons
@@ -13,29 +17,31 @@ namespace ProfitableWeapons
     {
         static HarmonyPatches()
         {
-            HarmonyInstance h = HarmonyInstance.Create("xeonvoadan.rimworld.profitableweapons.main");
+            HarmonyInstance h = HarmonyInstance.Create("XeoNovaDan.ProfitableWeapons");
 
             h.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), "TryDropEquipment"),
-                new HarmonyMethod(typeof(HarmonyPatches), nameof(CheckScavengedWeapon)), null, null);
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(CheckScavengedWeapon)), null);
 
             h.Patch(AccessTools.Method(typeof(Pawn_InventoryTracker), "DropAllNearPawn"),
-                new HarmonyMethod(typeof(HarmonyPatches), nameof(CheckScavengedWeaponDrop)), null, null);
+                new HarmonyMethod(typeof(HarmonyPatches), nameof(CheckScavengedWeaponDrop)), null);
 
             // Try and patch Mending
 
-            /* try
+            try
             {
                 ((Action)(() =>
                 {
                     if (ModCompatibilityCheck.MendingIsActive)
                     {
-                        Log.Message("Viable Weapon Trading: Mending detected as active in load order. Patching...");
+                        Log.Message("[Viable Weapon Trading]: Mending detected as active in load order. Patching...");
+
                         h.Patch(AccessTools.Method(typeof(Mending.JobDriver_Mend), "DoBill"), null,
-                            new HarmonyMethod(typeof(HarmonyPatches), nameof(RemoveScavengedWeaponFlag)), null);
+                            new HarmonyMethod(typeof(HarmonyPatches), nameof(RemoveScavengedWeaponFlag)));
+
                     }
                 }))();
             }
-            catch (TypeLoadException) { } */
+            catch (TypeLoadException) { }
 
         }
 
@@ -68,24 +74,28 @@ namespace ProfitableWeapons
             }
         }
 
-        // Postfix Mending.JobDriver_Mend DoBill
+        // Postfix Mending.JobDriver_Mend DoBill - Thanks NIA!
 
-        /* public static void RemoveScavengedWeaponFlag (Mending.JobDriver_Mend __instance, Thing objectThing)
+        public static void RemoveScavengedWeaponFlag(Mending.JobDriver_Mend __instance, Toil __result)
         {
-            if (ModCompatibilityCheck.MendingIsActive && ProfitableWeaponsSettings.mendingRemoveScavengedFlag)
+            if (ProfitableWeaponsSettings.mendingRemoveScavengedFlag)
             {
-                if (objectThing.HitPoints == objectThing.MaxHitPoints)
+                var mendingDelegate = __result.tickAction;
+                var weapon = __instance.job.GetTarget(Mending.JobDriver_DoBill.objectTI).Thing;
+                __result.tickAction = () =>
                 {
-                    ThingWithComps weapon = objectThing as ThingWithComps;
-                    CompScavengedWeapon csw = objectThing.TryGetComp<CompScavengedWeapon>();
-                    if (csw != null)
+                    mendingDelegate();
+                    if (weapon != null && !weapon.Destroyed && weapon.HitPoints == weapon.MaxHitPoints)
                     {
-                        csw.RemoveScavengedWeaponFlag();
+                        CompScavengedWeapon comp = weapon.TryGetComp<CompScavengedWeapon>();
+                        if (comp != null)
+                        {
+                            comp.RemoveScavengedWeaponFlag();
+                        }
                     }
-                    Log.Message("Testing Viable Weapon Trading patch onto Mending method.");
-                }
+                };
             }
-        } */
+        }
 
     }
 }

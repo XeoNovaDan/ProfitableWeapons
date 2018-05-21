@@ -39,7 +39,7 @@ namespace ProfitableWeapons
             options.SliderLabeled("SettingScavengeSellMultFactor".Translate(), ref scavengeSellMultFactor, scavengeSellMultFactor.ToStringPercent(), 0, 1, "SettingScavengeSellMultFactorToolTip".Translate());
             options.Gap();
             Text.Font = GameFont.Medium;
-            options.Label("Mending (functionality not yet implemented)");
+            options.Label("Mending");
             Text.Font = GameFont.Small;
             options.Gap(6);
             if (ModCompatibilityCheck.MendingIsActive)
