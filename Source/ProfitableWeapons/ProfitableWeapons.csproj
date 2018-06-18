@@ -40,7 +40,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Mending">
-      <HintPath>C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Mending\Assemblies\Mending.dll</HintPath>
+      <HintPath>references\Mending.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />

@@ -15,15 +15,20 @@ namespace ProfitableWeapons
     [StaticConstructorOnStartup]
     static class HarmonyPatches
     {
+
+        static readonly Type patchType = typeof(HarmonyPatches);
+
         static HarmonyPatches()
         {
             HarmonyInstance h = HarmonyInstance.Create("XeoNovaDan.ProfitableWeapons");
 
+            // HarmonyInstance.DEBUG = true;
+
             h.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), "TryDropEquipment"),
-                new HarmonyMethod(typeof(HarmonyPatches), nameof(CheckScavengedWeapon)), null);
+                new HarmonyMethod(patchType, nameof(CheckScavengedWeapon)), null);
 
             h.Patch(AccessTools.Method(typeof(Pawn_InventoryTracker), "DropAllNearPawn"),
-                new HarmonyMethod(typeof(HarmonyPatches), nameof(CheckScavengedWeaponDrop)), null);
+                new HarmonyMethod(patchType, nameof(CheckScavengedWeaponDrop)), null);
 
             // Try and patch Mending
 
@@ -33,7 +38,7 @@ namespace ProfitableWeapons
                 {
                     if (ModCompatibilityCheck.MendingIsActive)
                     {
-                        Log.Message("[Viable Weapon Trading]: Mending detected as active in load order. Patching...");
+                        Log.Message("Profitable Weapons :: Mending detected as active in load order. Patching...");
 
                         h.Patch(AccessTools.Method(typeof(Mending.JobDriver_Mend), "DoBill"), null,
                             new HarmonyMethod(typeof(HarmonyPatches), nameof(RemoveScavengedWeaponFlag)));

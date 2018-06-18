@@ -15,7 +15,7 @@ namespace ProfitableWeapons
         {
             get
             {
-                return this.isScavengedWeaponInt;
+                return isScavengedWeaponInt;
             }
         }
 
@@ -57,7 +57,7 @@ namespace ProfitableWeapons
             Scribe_Values.Look<bool>(ref isScavengedWeaponInt, "scavenged", false, false);
         }
 
-        public bool isScavengedWeaponInt;
+        private bool isScavengedWeaponInt;
 
     }
 }
