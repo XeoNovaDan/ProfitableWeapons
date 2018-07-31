@@ -20,7 +20,7 @@
     <Operation Class="PatchOperationAdd">
         <xpath>*/StatDef[defName="SellPriceFactor"]/parts</xpath>
         <value>
-            <li Class="ProfitableWeapons.StatPart_IsScavengedWeapon"/>
+            <li Class="ProfitableWeapons.StatPart_IsLootedWeapon"/>
         </value>
     </Operation>
 

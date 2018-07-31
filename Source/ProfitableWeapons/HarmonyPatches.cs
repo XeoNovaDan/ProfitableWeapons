@@ -24,11 +24,11 @@ namespace ProfitableWeapons
 
             // HarmonyInstance.DEBUG = true;
 
-            h.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), "TryDropEquipment"),
-                new HarmonyMethod(patchType, nameof(CheckScavengedWeapon)), null);
+            h.Patch(AccessTools.Method(typeof(Pawn_InventoryTracker), nameof(Pawn_InventoryTracker.DropAllNearPawn)),
+                new HarmonyMethod(patchType, nameof(PrefixDropAllNearPawn)), null);
 
-            h.Patch(AccessTools.Method(typeof(Pawn_InventoryTracker), "DropAllNearPawn"),
-                new HarmonyMethod(patchType, nameof(CheckScavengedWeaponDrop)), null);
+            h.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), nameof(Pawn_EquipmentTracker.TryDropEquipment)), null,
+                new HarmonyMethod(patchType, nameof(PostfixTryDropEquipment)));
 
             // Try and patch Mending
 
@@ -50,40 +50,28 @@ namespace ProfitableWeapons
 
         }
 
-        // Prefix Pawn_EquipmentTracker TryDropEquipment
-
-        public static void CheckScavengedWeapon(Pawn_EquipmentTracker __instance, ref ThingWithComps eq)
-        {
-            Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
-            eq.TryGetComp<CompScavengedWeapon>()?.CheckScavengedWeapon(pawn);
-        }
-
-        // Prefix Pawn_InventoryTracker DropAllNearPawn
-
-        public static void CheckScavengedWeaponDrop(Pawn_InventoryTracker __instance)
+        public static void PrefixDropAllNearPawn(Pawn_InventoryTracker __instance, Pawn ___pawn, ref ThingOwner ___innerContainer)
         {
             if (ProfitableWeaponsSettings.flagInventoryWeapons)
             {
-                Pawn pawn = Traverse.Create(__instance).Field("pawn").GetValue<Pawn>();
-                ThingOwner<Thing> inner = Traverse.Create(__instance).Field("innerContainer").GetValue<ThingOwner<Thing>>();
-                List<Thing> templist = Traverse.Create(__instance).Field("tmpThingList").GetValue<List<Thing>>();
-                templist.Clear();
-                templist.AddRange(inner);
-                for (int i = 0; i < templist.Count; i++)
+                foreach (Thing thing in ___innerContainer)
                 {
-                    if (templist[i] != null && templist[i] is ThingWithComps)
-                    {
-                        templist[i].TryGetComp<CompScavengedWeapon>()?.CheckScavengedWeapon(pawn);
-                    }
+                    if (thing.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
+                        lootedComp.CheckLootedWeapon(___pawn);
                 }
             }
         }
+        
+        public static void PostfixTryDropEquipment(Pawn_EquipmentTracker __instance, Pawn ___pawn, ref ThingWithComps eq)
+        {
+            eq.TryGetComp<CompLootedWeapon>()?.CheckLootedWeapon(___pawn);
+        }
 
-        // Postfix Mending.JobDriver_Mend DoBill - Thanks NIA!
+        // Thanks NIA!
 
         public static void RemoveScavengedWeaponFlag(Mending.JobDriver_Mend __instance, Toil __result)
         {
-            if (ProfitableWeaponsSettings.mendingRemoveScavengedFlag)
+            if (ProfitableWeaponsSettings.mendingRemoveLootedFlag)
             {
                 var mendingDelegate = __result.tickAction;
                 var weapon = __instance.job.GetTarget(Mending.JobDriver_DoBill.objectTI).Thing;
@@ -91,13 +79,7 @@ namespace ProfitableWeapons
                 {
                     mendingDelegate();
                     if (weapon != null && !weapon.Destroyed && weapon.HitPoints == weapon.MaxHitPoints)
-                    {
-                        CompScavengedWeapon comp = weapon.TryGetComp<CompScavengedWeapon>();
-                        if (comp != null)
-                        {
-                            comp.RemoveScavengedWeaponFlag();
-                        }
-                    }
+                        weapon.TryGetComp<CompLootedWeapon>()?.RemoveLootedWeaponFlag();
                 };
             }
         }

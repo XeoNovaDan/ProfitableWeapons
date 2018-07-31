@@ -58,11 +58,11 @@
     <Compile Include="ModCompatibilityCheck.cs" />
     <Compile Include="ProfitableWeaponsSettings.cs" />
     <Compile Include="SettingsHelper.cs" />
-    <Compile Include="SpecialThingFilterWorker_NonScavengedWeapon.cs" />
-    <Compile Include="SpecialThingFilterWorker_ScavengedWeapon.cs" />
-    <Compile Include="CompScavengedWeapon.cs" />
+    <Compile Include="SpecialThingFilterWorker_NonLootedWeapon.cs" />
+    <Compile Include="SpecialThingFilterWorker_LootedWeapon.cs" />
+    <Compile Include="CompLootedWeapon.cs" />
     <Compile Include="HarmonyPatches.cs" />
-    <Compile Include="StatPart_IsScavengedWeapon.cs" />
+    <Compile Include="StatPart_IsLootedWeapon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

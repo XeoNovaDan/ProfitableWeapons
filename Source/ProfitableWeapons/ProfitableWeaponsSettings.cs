@@ -12,17 +12,11 @@ namespace ProfitableWeapons
     public class ProfitableWeaponsSettings : ModSettings
     {
 
-        #region FlagInventoryWeapons
         public static bool flagInventoryWeapons = true;
-        #endregion
 
-        #region ScavengeSellMultFactor
-        public static float scavengeSellMultFactor = 0.25f;
-        #endregion
+        public static float lootedSellPriceMultFactor = 0.25f;
 
-        #region
-        public static bool mendingRemoveScavengedFlag = false;
-        #endregion
+        public static bool mendingRemoveLootedFlag = false;
 
         public void DoWindowContents(Rect wrect)
         {
@@ -36,7 +30,7 @@ namespace ProfitableWeapons
             options.Gap();
             options.CheckboxLabeled("SettingFlagInventoryWeapons".Translate(), ref flagInventoryWeapons, "SettingFlagInventoryWeaponsToolTip".Translate());
             options.Gap();
-            options.SliderLabeled("SettingScavengeSellMultFactor".Translate(), ref scavengeSellMultFactor, scavengeSellMultFactor.ToStringPercent(), 0, 1, "SettingScavengeSellMultFactorToolTip".Translate());
+            options.SliderLabeled("SettingLootedSellMultFactor".Translate(), ref lootedSellPriceMultFactor, lootedSellPriceMultFactor.ToStringPercent(), 0, 1, "SettingLootedSellMultFactorToolTip".Translate());
             options.Gap();
             Text.Font = GameFont.Medium;
             options.Label("Mending");
@@ -44,7 +38,7 @@ namespace ProfitableWeapons
             options.Gap(6);
             if (ModCompatibilityCheck.MendingIsActive)
             {
-                options.CheckboxLabeled("MendingRemoveScavengedFlag".Translate(), ref mendingRemoveScavengedFlag, "MendingRemoveScavengedFlagToolTip".Translate());
+                options.CheckboxLabeled("MendingRemoveLootedFlag".Translate(), ref mendingRemoveLootedFlag, "MendingRemoveLootedFlagToolTip".Translate());
             }
             else
             {
@@ -62,8 +56,8 @@ namespace ProfitableWeapons
         public override void ExposeData()
         {
             Scribe_Values.Look(ref flagInventoryWeapons, "flagInventoryWeapons", true);
-            Scribe_Values.Look(ref scavengeSellMultFactor, "scavengeSellMultFactor", 0.25f);
-            Scribe_Values.Look(ref mendingRemoveScavengedFlag, "mendingRemoveScavengedFlag", false);
+            Scribe_Values.Look(ref lootedSellPriceMultFactor, "lootedSellPriceMultFactor", 0.25f);
+            Scribe_Values.Look(ref mendingRemoveLootedFlag, "mendingRemoveLootedFlag", false);
         }
 
     }
@@ -77,7 +71,7 @@ namespace ProfitableWeapons
             GetSettings<ProfitableWeaponsSettings>();
         }
 
-        public override string SettingsCategory() => "Viable Weapon Trading";
+        public override string SettingsCategory() => "ProfitableWeaponsSettingsCategory".Translate();
 
         public override void DoSettingsWindowContents(Rect inRect)
         {

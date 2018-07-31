@@ -12,7 +12,7 @@
         <xpath>*/ThingDef[@Name="BaseWeapon"]/comps</xpath>
         <value>
             <li>
-                <compClass>ProfitableWeapons.CompScavengedWeapon</compClass>
+                <compClass>ProfitableWeapons.CompLootedWeapon</compClass>
             </li>
         </value>
     </Operation>
