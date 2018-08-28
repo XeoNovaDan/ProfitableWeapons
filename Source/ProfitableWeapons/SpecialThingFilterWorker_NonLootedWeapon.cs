@@ -8,14 +8,12 @@ using Harmony;
 
 namespace ProfitableWeapons
 {
-    class SpecialThingFilterWorker_NonLootedWeapon : SpecialThingFilterWorker
+    public class SpecialThingFilterWorker_NonLootedWeapon : SpecialThingFilterWorker
     {
 
         public override bool Matches(Thing t)
         {
-            if (t.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
-                return !lootedComp.IsLootedWeapon;
-            return false;
+            return (t.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp) ? !lootedComp.IsLootedWeapon : false;
         }
 
     }
