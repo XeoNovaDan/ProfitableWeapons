@@ -30,6 +30,12 @@ namespace ProfitableWeapons
             h.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), nameof(Pawn_EquipmentTracker.TryDropEquipment)), null,
                 new HarmonyMethod(patchType, nameof(PostfixTryDropEquipment)));
 
+            h.Patch(AccessTools.Method(typeof(Verb_LaunchProjectile), "TryCastShot"), null,
+                new HarmonyMethod(patchType, nameof(PostfixTryCastShot)));
+
+            h.Patch(AccessTools.Method(typeof(Verb_MeleeAttack), "TryCastShot"), null,
+                new HarmonyMethod(patchType, nameof(PostfixTryCastShot)));
+
             // Try and patch Mending
 
             try
@@ -53,18 +59,20 @@ namespace ProfitableWeapons
         public static void PrefixDropAllNearPawn(Pawn_InventoryTracker __instance, Pawn ___pawn, ref ThingOwner ___innerContainer)
         {
             if (ProfitableWeaponsSettings.flagInventoryWeapons)
-            {
                 foreach (Thing thing in ___innerContainer)
-                {
                     if (thing.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
                         lootedComp.CheckLootedWeapon(___pawn);
-                }
-            }
         }
         
         public static void PostfixTryDropEquipment(Pawn_EquipmentTracker __instance, Pawn ___pawn, ref ThingWithComps eq)
         {
             eq.TryGetComp<CompLootedWeapon>()?.CheckLootedWeapon(___pawn);
+        }
+
+        public static void PostfixTryCastShot(Verb_LaunchProjectile __instance, bool __result)
+        {
+            if (__result && __instance.CasterPawn?.equipment?.Primary?.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
+                lootedComp.ModifyAttackCounter();
         }
 
         // Thanks NIA!

@@ -16,6 +16,8 @@ namespace ProfitableWeapons
 
         public static float lootedSellPriceMultFactor = 0.25f;
 
+        public static bool flagFromWellUsed = true;
+
         public static bool mendingRemoveLootedFlag = false;
 
         public void DoWindowContents(Rect wrect)
@@ -57,6 +59,7 @@ namespace ProfitableWeapons
         {
             Scribe_Values.Look(ref flagInventoryWeapons, "flagInventoryWeapons", true);
             Scribe_Values.Look(ref lootedSellPriceMultFactor, "lootedSellPriceMultFactor", 0.25f);
+            Scribe_Values.Look(ref flagFromWellUsed, "flagFromWellUsed", true);
             Scribe_Values.Look(ref mendingRemoveLootedFlag, "mendingRemoveLootedFlag", false);
         }
 

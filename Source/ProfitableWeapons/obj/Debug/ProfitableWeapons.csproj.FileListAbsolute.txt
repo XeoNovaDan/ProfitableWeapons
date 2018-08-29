@@ -15,3 +15,7 @@ E:\Documents\My RimWorld Mods\B19\ProfitableWeapons\Assemblies\ProfitableWeapons
 E:\Documents\My RimWorld Mods\B19\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojAssemblyReference.cache
 E:\Documents\My RimWorld Mods\B19\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csproj.CoreCompileInputs.cache
 E:\Documents\My RimWorld Mods\B19\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
+E:\Documents\GitHub\ProfitableWeapons\Assemblies\ProfitableWeapons.dll
+E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojAssemblyReference.cache
+E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csproj.CoreCompileInputs.cache
+E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll

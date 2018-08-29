@@ -13,7 +13,7 @@ namespace ProfitableWeapons
 
         public override bool Matches(Thing t)
         {
-            return (t.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp) ? !lootedComp.IsLootedWeapon : false;
+            return (t.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp) ? !lootedComp.IsUsedWeapon : false;
         }
 
     }
