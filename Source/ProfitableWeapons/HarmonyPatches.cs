@@ -69,10 +69,10 @@ namespace ProfitableWeapons
             eq.TryGetComp<CompLootedWeapon>()?.CheckLootedWeapon(___pawn);
         }
 
-        public static void PostfixTryCastShot(Verb_LaunchProjectile __instance, bool __result)
+        public static void PostfixTryCastShot(Verb __instance, bool __result)
         {
-            if (__result && __instance.CasterPawn?.equipment?.Primary?.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
-                lootedComp.ModifyAttackCounter();
+            if (__result && __instance.EquipmentSource?.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
+                lootedComp.ModifyAttackCounter(__instance);
         }
 
         // Thanks NIA!

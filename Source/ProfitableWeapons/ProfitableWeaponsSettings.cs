@@ -14,9 +14,9 @@ namespace ProfitableWeapons
 
         public static bool flagInventoryWeapons = true;
 
-        public static float lootedSellPriceMultFactor = 0.25f;
-
         public static bool flagFromWellUsed = true;
+
+        public static float lootedSellPriceMultFactor = 0.25f;
 
         public static bool mendingRemoveLootedFlag = false;
 
@@ -31,6 +31,8 @@ namespace ProfitableWeapons
             Text.Anchor = TextAnchor.UpperLeft;
             options.Gap();
             options.CheckboxLabeled("SettingFlagInventoryWeapons".Translate(), ref flagInventoryWeapons, "SettingFlagInventoryWeaponsToolTip".Translate());
+            options.Gap();
+            options.CheckboxLabeled("SettingFlagWellUsedWeapons".Translate(), ref flagFromWellUsed, "SettingFlagWellUsedWeaponsToolTip".Translate());
             options.Gap();
             options.SliderLabeled("SettingLootedSellMultFactor".Translate(), ref lootedSellPriceMultFactor, lootedSellPriceMultFactor.ToStringPercent(), 0, 1, "SettingLootedSellMultFactorToolTip".Translate());
             options.Gap();

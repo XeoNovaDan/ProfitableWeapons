@@ -6,11 +6,14 @@
     <SettingFlagInventoryWeapons>Flag inventory weapons</SettingFlagInventoryWeapons>
     <SettingFlagInventoryWeaponsToolTip>If enabled, weapons dropped from non-player pawn inventories (e.g. combat suppliers) will be marked as 'looted'.</SettingFlagInventoryWeaponsToolTip>
 
+    <SettingFlagWellUsedWeapons>Flag well-used weapons</SettingFlagWellUsedWeapons>
+    <SettingFlagWellUsedWeaponsToolTip>If enabled, weapons will be marked as 'looted' after a total of 20 full bursts and melee attacks.</SettingFlagWellUsedWeaponsToolTip>
+
     <SettingLootedSellMultFactor>Looted sell multiplier factor</SettingLootedSellMultFactor>
-    <SettingLootedSellMultFactorToolTip>When a weapon gets marked as 'looted', their sell price multiplier is multiplied by this value.\n\nRequires restart to take effect.</SettingLootedSellMultFactorToolTip>
+    <SettingLootedSellMultFactorToolTip>When a weapon gets marked as 'looted', their sell price multiplier is multiplied by this value.</SettingLootedSellMultFactorToolTip>
 
     <MendingIsNotActive>Mending is currently not active.</MendingIsNotActive>
     <MendingRemoveLootedFlag>Remove 'looted' tag from mended weapons</MendingRemoveLootedFlag>
-    <MendingRemoveLootedFlagToolTip>If a weapon gets mended at a mending station, its 'looted' tag will be removed in a similar fashion to deadman's apparel.</MendingRemoveLootedFlagToolTip>
+    <MendingRemoveLootedFlagToolTip>If a weapon gets mended at a mending station, its 'looted' tag will be removed in a similar fashion to tainted apparel.</MendingRemoveLootedFlagToolTip>
 
 </LanguageData>
