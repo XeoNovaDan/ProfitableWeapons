@@ -1,0 +1,28 @@
+<Patch>
+
+    <Operation Class="PatchOperationFindMod">
+        <mods>
+            <li>Rimsenal - Federation</li>
+        </mods>
+        <match Class="PatchOperationSequence">
+            <success>Always</success>
+            <operations>
+                <li Class="PatchOperationReplace">
+                    <xpath>*/ThingDef[@Name="BaseADGun" or @Name="BaseADOriginalGun" or @Name="BaseFedGun"]/statBases/SellPriceFactor</xpath>
+                    <value>
+                        <SellPriceFactor>0.7</SellPriceFactor>
+                    </value>
+                </li>
+                <li Class="PatchOperationAdd">
+                    <xpath>*/ThingDef[@Name="BaseADGun" or @Name="BaseADOriginalGun" or @Name="BaseFedGun"]/comps</xpath>
+                    <value>
+                        <li>
+                            <compClass>ProfitableWeapons.CompLootedWeapon</compClass>
+                        </li>
+                    </value>
+                </li>
+            </operations>
+        </match>
+    </Operation>
+
+</Patch>
