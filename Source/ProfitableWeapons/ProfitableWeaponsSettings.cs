@@ -18,7 +18,7 @@ namespace ProfitableWeapons
 
         public static float lootedSellPriceMultFactor = 0.25f;
 
-        public static bool mendingRemoveLootedFlag = false;
+        public static bool mendingRemoveLootedFlag = true;
 
         public void DoWindowContents(Rect wrect)
         {
@@ -37,7 +37,7 @@ namespace ProfitableWeapons
             options.SliderLabeled("SettingLootedSellMultFactor".Translate(), ref lootedSellPriceMultFactor, lootedSellPriceMultFactor.ToStringPercent(), 0, 1, "SettingLootedSellMultFactorToolTip".Translate());
             options.Gap();
             Text.Font = GameFont.Medium;
-            options.Label("Mending");
+            options.Label("MendAndRecycle");
             Text.Font = GameFont.Small;
             options.Gap(6);
             if (ModCompatibilityCheck.MendingIsActive)
@@ -62,7 +62,7 @@ namespace ProfitableWeapons
             Scribe_Values.Look(ref flagInventoryWeapons, "flagInventoryWeapons", true);
             Scribe_Values.Look(ref lootedSellPriceMultFactor, "lootedSellPriceMultFactor", 0.25f);
             Scribe_Values.Look(ref flagFromWellUsed, "flagFromWellUsed", true);
-            Scribe_Values.Look(ref mendingRemoveLootedFlag, "mendingRemoveLootedFlag", false);
+            Scribe_Values.Look(ref mendingRemoveLootedFlag, "mendingRemoveLootedFlag", true);
         }
 
     }

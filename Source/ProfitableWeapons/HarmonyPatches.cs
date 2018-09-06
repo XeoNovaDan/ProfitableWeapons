@@ -46,7 +46,7 @@ namespace ProfitableWeapons
                     {
                         Log.Message("Profitable Weapons :: Mending detected as active in load order. Patching...");
 
-                        h.Patch(AccessTools.Method(typeof(Mending.JobDriver_Mend), "DoBill"), null,
+                        h.Patch(AccessTools.Method(typeof(MendAndRecycle.JobDriver_Mend), "DoBill"), null,
                             new HarmonyMethod(typeof(HarmonyPatches), nameof(RemoveScavengedWeaponFlag)));
 
                     }
@@ -77,16 +77,16 @@ namespace ProfitableWeapons
 
         // Thanks NIA!
 
-        public static void RemoveScavengedWeaponFlag(Mending.JobDriver_Mend __instance, Toil __result)
+        public static void RemoveScavengedWeaponFlag(MendAndRecycle.JobDriver_Mend __instance, Toil __result)
         {
             if (ProfitableWeaponsSettings.mendingRemoveLootedFlag)
             {
                 var mendingDelegate = __result.tickAction;
-                var weapon = __instance.job.GetTarget(Mending.JobDriver_DoBill.objectTI).Thing;
+                var weapon = __instance.job.GetTarget(MendAndRecycle.JobDriver_DoBill.objectTI).Thing;
                 __result.tickAction = () =>
                 {
                     mendingDelegate();
-                    if (weapon != null && !weapon.Destroyed && weapon.HitPoints == weapon.MaxHitPoints)
+                    if (weapon != null && !weapon.Destroyed && weapon.HitPoints >= weapon.MaxHitPoints)
                         weapon.TryGetComp<CompLootedWeapon>()?.RemoveLootedWeaponFlag();
                 };
             }

@@ -39,7 +39,11 @@ namespace ProfitableWeapons
             }
         }
 
-        public void RemoveLootedWeaponFlag() => isLootedWeaponInt = false;
+        public void RemoveLootedWeaponFlag()
+        {
+            isLootedWeaponInt = false;
+            attackCounter = 0;
+        }
 
         public override string TransformLabel(string label)
         {

@@ -12,8 +12,8 @@
     <SettingLootedSellMultFactor>Looted sell multiplier factor</SettingLootedSellMultFactor>
     <SettingLootedSellMultFactorToolTip>When a weapon gets marked as 'looted', their sell price multiplier is multiplied by this value.</SettingLootedSellMultFactorToolTip>
 
-    <MendingIsNotActive>Mending is currently not active.</MendingIsNotActive>
+    <MendingIsNotActive>MendAndRecycle is currently not active.</MendingIsNotActive>
     <MendingRemoveLootedFlag>Remove 'looted' tag from mended weapons</MendingRemoveLootedFlag>
-    <MendingRemoveLootedFlagToolTip>If a weapon gets mended at a mending station, its 'looted' tag will be removed in a similar fashion to tainted apparel.</MendingRemoveLootedFlagToolTip>
+    <MendingRemoveLootedFlagToolTip>When a weapon gets mended at a mending station, its 'looted' tag will be removed in a similar fashion to tainted apparel.</MendingRemoveLootedFlagToolTip>
 
 </LanguageData>
