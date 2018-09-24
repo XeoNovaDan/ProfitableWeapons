@@ -1,0 +1,29 @@
+<Patch>
+
+    <Operation Class="PatchOperationFindMod">
+        <mods>
+            <li>Sparkling Worlds - Full Mod [B19]</li>
+            <li>Sparkling Worlds - Core Mod [B19]</li>
+        </mods>
+        <match Class="PatchOperationSequence">
+            <success>Always</success>
+            <operations>
+                <li Class="PatchOperationReplace">
+                    <xpath>*/ThingDef[@Name="BaseWeaponSW"]/statBases/SellPriceFactor</xpath>
+                    <value>
+                        <SellPriceFactor>0.7</SellPriceFactor>
+                    </value>
+                </li>
+                <li Class="PatchOperationAdd">
+                    <xpath>*/ThingDef[@Name="BaseWeaponSW"]/comps</xpath>
+                    <value>
+                        <li>
+                            <compClass>ProfitableWeapons.CompLootedWeapon</compClass>
+                        </li>
+                    </value>
+                </li>
+            </operations>
+        </match>
+    </Operation>
+
+</Patch>
