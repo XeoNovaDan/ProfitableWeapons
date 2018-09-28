@@ -37,7 +37,6 @@ namespace ProfitableWeapons
                 new HarmonyMethod(patchType, nameof(PostfixTryCastShot)));
 
             // Try and patch Mending
-
             try
             {
                 ((Action)(() =>
@@ -53,6 +52,21 @@ namespace ProfitableWeapons
                 }))();
             }
             catch (TypeLoadException) { }
+
+            // Dynamically patch all ThingDefs that are weapons
+            foreach (ThingDef weaponDef in DefDatabase<ThingDef>.AllDefs.Where(d => d.IsWeapon && !d.HasComp(typeof(CompLootedWeapon))))
+            {
+                // 70% sell price factor - nice 'n' easy
+                weaponDef.SetStatBaseValue(StatDefOf.SellPriceFactor, 0.7f);
+
+                // CompLootedWeapon
+                if (weaponDef.comps == null)
+                    weaponDef.comps = new List<CompProperties>();
+                weaponDef.comps.Add(new CompProperties
+                {
+                    compClass = typeof(CompLootedWeapon)
+                });
+            }
 
         }
 
