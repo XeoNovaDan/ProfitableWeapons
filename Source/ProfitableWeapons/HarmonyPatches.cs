@@ -36,14 +36,14 @@ namespace ProfitableWeapons
             h.Patch(AccessTools.Method(typeof(Verb_MeleeAttack), "TryCastShot"), null,
                 new HarmonyMethod(patchType, nameof(PostfixTryCastShot)));
 
-            // Try and patch Mending
+            //// Try and patch Mending
             try
             {
                 ((Action)(() =>
                 {
                     if (ModCompatibilityCheck.MendingIsActive)
                     {
-                        Log.Message("Profitable Weapons :: Mending detected as active in load order. Patching...");
+                        Log.Message("Profitable Weapons :: MendAndRecycle detected as active in load order. Patching...");
 
                         h.Patch(AccessTools.Method(typeof(MendAndRecycle.JobDriver_Mend), "DoBill"), null,
                             new HarmonyMethod(typeof(HarmonyPatches), nameof(RemoveScavengedWeaponFlag)));
@@ -51,7 +51,10 @@ namespace ProfitableWeapons
                     }
                 }))();
             }
-            catch (TypeLoadException) { }
+            catch (TypeLoadException)
+            {
+                Log.Message("Profitable Weapons :: MendAndRecycle not detected as active in load order.");
+            }
 
             // Dynamically patch all ThingDefs that are weapons
             foreach (ThingDef weaponDef in DefDatabase<ThingDef>.AllDefs.Where(d => d.IsWeapon && !d.HasComp(typeof(CompLootedWeapon))))
