@@ -13,17 +13,15 @@ namespace ProfitableWeapons
         public override void TransformValue(StatRequest req, ref float val)
         {
             if (req.HasThing && req.Thing.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp && lootedComp.IsUsedWeapon)
-                val *= LootedSellPriceFactorMult;
+                val *= ProfitableWeaponsSettings.lootedSellPriceMult;
         }
 
         public override string ExplanationPart(StatRequest req)
         {
             if (req.HasThing && req.Thing.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp && lootedComp.IsUsedWeapon)
-                return "StatsReport_IsLootedWeapon".Translate() + ": x" + LootedSellPriceFactorMult.ToStringPercent();
+                return "StatsReport_IsLootedWeapon".Translate() + ": x" + ProfitableWeaponsSettings.lootedSellPriceMult.ToStringPercent();
             return null;
         }
-
-        private float LootedSellPriceFactorMult => ProfitableWeaponsSettings.lootedSellPriceMultFactor;
 
     }
 }

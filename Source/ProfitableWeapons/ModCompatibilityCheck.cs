@@ -11,14 +11,9 @@ namespace ProfitableWeapons
     public class ModCompatibilityCheck
     {
 
-        public static bool MendingIsActive
-        {
-            get
-            {
-                Log.Message("Mending");
-                return ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "MendAndRecycle");
-            }
-        }
+        public static bool CombatExtended => ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "Combat Extended");
+
+        public static bool Mending => ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "MendAndRecycle");
         
 
     }

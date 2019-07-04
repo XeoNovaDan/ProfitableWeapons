@@ -24,90 +24,113 @@ namespace ProfitableWeapons
 
             // HarmonyInstance.DEBUG = true;
 
-            h.Patch(AccessTools.Method(typeof(Pawn_InventoryTracker), nameof(Pawn_InventoryTracker.DropAllNearPawn)),
-                new HarmonyMethod(patchType, nameof(PrefixDropAllNearPawn)), null);
+            // Do automatic patches
+            h.PatchAll();
 
-            h.Patch(AccessTools.Method(typeof(Pawn_EquipmentTracker), nameof(Pawn_EquipmentTracker.TryDropEquipment)), null,
-                new HarmonyMethod(patchType, nameof(PostfixTryDropEquipment)));
+            // Manual patches
+            var tryCastShotPostfix = new HarmonyMethod(patchType, nameof(Postfix_TryCastShot));
+            h.Patch(AccessTools.Method(typeof(Verb_LaunchProjectile), "TryCastShot"), postfix: tryCastShotPostfix);
+            h.Patch(AccessTools.Method(typeof(Verb_MeleeAttack), "TryCastShot"), postfix: tryCastShotPostfix);
 
-            h.Patch(AccessTools.Method(typeof(Verb_LaunchProjectile), "TryCastShot"), null,
-                new HarmonyMethod(patchType, nameof(PostfixTryCastShot)));
-
-            h.Patch(AccessTools.Method(typeof(Verb_MeleeAttack), "TryCastShot"), null,
-                new HarmonyMethod(patchType, nameof(PostfixTryCastShot)));
-
-            //// Try and patch Mending
-            try
+            // Try and patch Combat Extended
+            if (ModCompatibilityCheck.CombatExtended)
             {
-                ((Action)(() =>
+                // Melee verb
+                var meleeVerbCE = GenTypes.GetTypeInAnyAssemblyNew("CombatExtended.Verb_MeleeAttackCE", null);
+                if (meleeVerbCE != null)
+                    h.Patch(AccessTools.Method(meleeVerbCE, "TryCastShot"), postfix: tryCastShotPostfix);
+                else
+                    Log.Error("Profitable Weapons - Couldn't find CombatExtended.Verb_MeleeAttackCE type to patch");
+
+                // Ranged verb
+                var launchProjectileVerbCE = GenTypes.GetTypeInAnyAssemblyNew("CombatExtended.Verb_LaunchProjectileCE", null);
+                if (launchProjectileVerbCE != null)
+                    h.Patch(AccessTools.Method(launchProjectileVerbCE, "TryCastShot"), postfix: tryCastShotPostfix);
+                else
+                    Log.Error("Profitable Weapons - Couldn't find CombatExtended.Verb_LaunchProjectileCE type to patch");
+            }
+
+            // Try and patch Mending
+            if (ModCompatibilityCheck.Mending)
+            {
+                // Mending JobDriver
+                var mendingJobDriver = GenTypes.GetTypeInAnyAssemblyNew("MendAndRecycle.JobDriver_Mend", null);
+                if (mendingJobDriver != null)
                 {
-                    if (ModCompatibilityCheck.MendingIsActive)
-                    {
-                        Log.Message("Profitable Weapons :: MendAndRecycle detected as active in load order. Patching...");
-
-                        h.Patch(AccessTools.Method(typeof(MendAndRecycle.JobDriver_Mend), "DoBill"), null,
-                            new HarmonyMethod(typeof(HarmonyPatches), nameof(RemoveScavengedWeaponFlag)));
-
-                    }
-                }))();
-            }
-            catch (TypeLoadException)
-            {
-                Log.Message("Profitable Weapons :: MendAndRecycle not detected as active in load order.");
-            }
-
-            // Dynamically patch all ThingDefs that are weapons
-            foreach (ThingDef weaponDef in DefDatabase<ThingDef>.AllDefs.Where(d => d.IsWeapon && !d.HasComp(typeof(CompLootedWeapon))))
-            {
-                // 70% sell price factor - nice 'n' easy
-                weaponDef.SetStatBaseValue(StatDefOf.SellPriceFactor, 0.7f);
-
-                // CompLootedWeapon
-                if (weaponDef.comps == null)
-                    weaponDef.comps = new List<CompProperties>();
-                weaponDef.comps.Add(new CompProperties
-                {
-                    compClass = typeof(CompLootedWeapon)
-                });
+                    h.Patch(mendingJobDriver.GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Instance).First().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).MaxBy(mi => mi.GetMethodBody()?.GetILAsByteArray().Length ?? -1),
+                        transpiler: new HarmonyMethod(patchType, nameof(Transpile_MendAndReycle_JobDriver_Mend_MendToil_TickAction)));
+                }
+                else
+                    Log.Error("Profitable Weapons - Couldn't find MendAndRecycle.JobDriver_Mend type to patch");
             }
 
         }
 
-        public static void PrefixDropAllNearPawn(Pawn_InventoryTracker __instance, Pawn ___pawn, ref ThingOwner ___innerContainer)
+        [HarmonyPatch(typeof(Pawn_InventoryTracker))]
+        [HarmonyPatch(nameof(Pawn_InventoryTracker.DropAllNearPawn))]
+        public static class Patch_Pawn_InventoryTracker_DropAllNearPawn
         {
-            if (ProfitableWeaponsSettings.flagInventoryWeapons)
-                foreach (Thing thing in ___innerContainer)
-                    if (thing.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
-                        lootedComp.CheckLootedWeapon(___pawn);
-        }
-        
-        public static void PostfixTryDropEquipment(Pawn_EquipmentTracker __instance, Pawn ___pawn, ref ThingWithComps eq)
-        {
-            eq.TryGetComp<CompLootedWeapon>()?.CheckLootedWeapon(___pawn);
+
+            public static void Prefix(Pawn ___pawn, ref ThingOwner ___innerContainer)
+            {
+                // If set to flag inventory weapons as looted, go through each item that was in inventory and attempt to flag as looted
+                if (ProfitableWeaponsSettings.flagInventoryWeapons)
+                    foreach (Thing thing in ___innerContainer)
+                        if (thing.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
+                            lootedComp.CheckLootedWeapon(___pawn);
+            }
+
         }
 
-        public static void PostfixTryCastShot(Verb __instance, bool __result)
+        [HarmonyPatch(typeof(Pawn_EquipmentTracker))]
+        [HarmonyPatch(nameof(Pawn_EquipmentTracker.TryDropEquipment))]
+        public static class Patch_Pawn_EquipmentTracker_TryDropEquipment
+        {
+
+            public static void Postfix(Pawn ___pawn, ref ThingWithComps eq)
+            {
+                // Try to flag equipped weapon as looted
+                if (eq.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
+                    lootedComp.CheckLootedWeapon(___pawn);
+            }
+
+        }
+
+        public static void Postfix_TryCastShot(Verb __instance, bool __result)
         {
             if (__result && __instance.EquipmentSource?.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
                 lootedComp.ModifyAttackCounter(__instance);
         }
 
-        // Thanks NIA!
-
-        public static void RemoveScavengedWeaponFlag(MendAndRecycle.JobDriver_Mend __instance, Toil __result)
+        #region Transpile_MendAndReycle_JobDriver_Mend_MendToil_TickAction
+        public static IEnumerable<CodeInstruction> Transpile_MendAndReycle_JobDriver_Mend_MendToil_TickAction(IEnumerable<CodeInstruction> instructions)
         {
-            if (ProfitableWeaponsSettings.mendingRemoveLootedFlag)
+            var instructionList = instructions.ToList();
+
+            var removeDeadmanSettingFieldInfo = AccessTools.Field(GenTypes.GetTypeInAnyAssemblyNew("MendAndRecycle.Settings", null), "removesDeadman");
+
+            for (int i = 0; i < instructionList.Count; i++)
             {
-                var mendingDelegate = __result.tickAction;
-                var weapon = __instance.job.GetTarget(MendAndRecycle.JobDriver_DoBill.objectTI).Thing;
-                __result.tickAction = () =>
+                var instruction = instructionList[i];
+
+                // If instruction checks for 'remove deadman' setting, add call to our helper method before it
+                if (instruction.opcode == OpCodes.Ldsfld && instruction.operand == removeDeadmanSettingFieldInfo)
                 {
-                    mendingDelegate();
-                    if (weapon != null && !weapon.Destroyed && weapon.HitPoints >= weapon.MaxHitPoints)
-                        weapon.TryGetComp<CompLootedWeapon>()?.RemoveLootedWeaponFlag();
-                };
+                    yield return new CodeInstruction(OpCodes.Ldloc_0); // thing
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(patchType, nameof(RemoveUsedWeaponFlag))); // RemoveUsedWeaponFlag(thing)
+                }
+
+                yield return instruction;
             }
         }
+
+        public static void RemoveUsedWeaponFlag(Thing thing) // Helper method for transpiler
+        {
+            // If settings allow for Mending to remove looted weapon flags and the thing in question has CompLootedWeapon, remove the looted flag
+            if (ProfitableWeaponsSettings.mendingRemoveLootedFlag && thing.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
+                lootedComp.RemoveLootedWeaponFlag();
+        }
+        #endregion
 
     }
 }

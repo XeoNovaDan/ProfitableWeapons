@@ -9,8 +9,11 @@
     <SettingFlagWellUsedWeapons>Flag well-used weapons</SettingFlagWellUsedWeapons>
     <SettingFlagWellUsedWeaponsToolTip>If enabled, weapons will be marked as 'looted' after a total of 20 full bursts and melee attacks.</SettingFlagWellUsedWeaponsToolTip>
 
-    <SettingLootedSellMultFactor>Looted sell multiplier factor</SettingLootedSellMultFactor>
-    <SettingLootedSellMultFactorToolTip>When a weapon gets marked as 'looted', their sell price multiplier is multiplied by this value.</SettingLootedSellMultFactorToolTip>
+    <SettingNonLootedSellMult>Non-looted sell price multiplier</SettingNonLootedSellMult>
+    <SettingNonLootedSellMultNote>Note: Requires restart for changes to take effect</SettingNonLootedSellMultNote>
+
+    <SettingLootedSellMult>Looted sell price multiplier</SettingLootedSellMult>
+    <SettingLootedSellMultNote>Note: This is applied as a multiplier of the non-looted sell price multiplier. Current looted sell price multiplier: {0}</SettingLootedSellMultNote>
 
     <MendingIsNotActive>MendAndRecycle is currently not active.</MendingIsNotActive>
     <MendingRemoveLootedFlag>Remove 'looted' tag from mended weapons</MendingRemoveLootedFlag>

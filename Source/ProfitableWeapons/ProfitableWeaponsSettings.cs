@@ -6,6 +6,7 @@ using RimWorld;
 using Verse;
 using Harmony;
 using UnityEngine;
+using SettingsHelper;
 
 namespace ProfitableWeapons
 {
@@ -16,7 +17,9 @@ namespace ProfitableWeapons
 
         public static bool flagFromWellUsed = true;
 
-        public static float lootedSellPriceMultFactor = 0.25f;
+        public static float nonLootedSellPriceMult = 1;
+
+        public static float lootedSellPriceMult = 0.2f;
 
         public static bool mendingRemoveLootedFlag = true;
 
@@ -30,17 +33,35 @@ namespace ProfitableWeapons
             Text.Font = GameFont.Small;
             Text.Anchor = TextAnchor.UpperLeft;
             options.Gap();
+
+            // Flag inventory weapons
             options.CheckboxLabeled("SettingFlagInventoryWeapons".Translate(), ref flagInventoryWeapons, "SettingFlagInventoryWeaponsToolTip".Translate());
             options.Gap();
+
+            // Flag well-used weapons
             options.CheckboxLabeled("SettingFlagWellUsedWeapons".Translate(), ref flagFromWellUsed, "SettingFlagWellUsedWeaponsToolTip".Translate());
             options.Gap();
-            options.SliderLabeled("SettingLootedSellMultFactor".Translate(), ref lootedSellPriceMultFactor, lootedSellPriceMultFactor.ToStringPercent(), 0, 1, "SettingLootedSellMultFactorToolTip".Translate());
+
+            // Non-looted sell price multiplier
+            options.AddLabeledSlider("SettingNonLootedSellMult".Translate(), ref nonLootedSellPriceMult, 0, 1, rightAlignedLabel: nonLootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
+            Text.Font = GameFont.Tiny;
+            options.Label("SettingNonLootedSellMultNote".Translate());
+            Text.Font = GameFont.Small;
             options.Gap();
+
+            // Looted sell price multiplier
+            options.AddLabeledSlider("SettingLootedSellMult".Translate(), ref lootedSellPriceMult, 0, 1, rightAlignedLabel: lootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
+            Text.Font = GameFont.Tiny;
+            options.Label("SettingLootedSellMultNote".Translate((nonLootedSellPriceMult * lootedSellPriceMult).ToStringPercent()));
+            Text.Font = GameFont.Small;
+            options.Gap();
+
+            // MendAndRecycle integration
             Text.Font = GameFont.Medium;
             options.Label("MendAndRecycle");
             Text.Font = GameFont.Small;
             options.Gap(6);
-            if (ModCompatibilityCheck.MendingIsActive)
+            if (ModCompatibilityCheck.Mending)
             {
                 options.CheckboxLabeled("MendingRemoveLootedFlag".Translate(), ref mendingRemoveLootedFlag, "MendingRemoveLootedFlagToolTip".Translate());
             }
@@ -60,7 +81,7 @@ namespace ProfitableWeapons
         public override void ExposeData()
         {
             Scribe_Values.Look(ref flagInventoryWeapons, "flagInventoryWeapons", true);
-            Scribe_Values.Look(ref lootedSellPriceMultFactor, "lootedSellPriceMultFactor", 0.25f);
+            Scribe_Values.Look(ref lootedSellPriceMult, "lootedSellPriceMult", 0.2f);
             Scribe_Values.Look(ref flagFromWellUsed, "flagFromWellUsed", true);
             Scribe_Values.Look(ref mendingRemoveLootedFlag, "mendingRemoveLootedFlag", true);
         }

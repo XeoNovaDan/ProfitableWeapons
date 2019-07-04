@@ -1,21 +1,4 @@
-E:\Documents\My RimWorld Mods\B18\ProfitableWeapons\Assemblies\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\B18\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojResolveAssemblyReference.cache
-E:\Documents\My RimWorld Mods\B18\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\B18\ViableWeaponEconomy\Assemblies\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\B18\ViableWeaponEconomy\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojResolveAssemblyReference.cache
-E:\Documents\My RimWorld Mods\B18\ViableWeaponEconomy\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\B18\ViableWeaponTrading\Assemblies\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\B18\ViableWeaponTrading\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojResolveAssemblyReference.cache
-E:\Documents\My RimWorld Mods\B18\ViableWeaponTrading\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\V1.0\ProfitableWeapons\Assemblies\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\V1.0\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csproj.CoreCompileInputs.cache
-E:\Documents\My RimWorld Mods\V1.0\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\V1.0\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojAssemblyReference.cache
-E:\Documents\My RimWorld Mods\B19\ProfitableWeapons\Assemblies\ProfitableWeapons.dll
-E:\Documents\My RimWorld Mods\B19\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojAssemblyReference.cache
-E:\Documents\My RimWorld Mods\B19\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csproj.CoreCompileInputs.cache
-E:\Documents\My RimWorld Mods\B19\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
-E:\Documents\GitHub\ProfitableWeapons\Assemblies\ProfitableWeapons.dll
+E:\Documents\GitHub\ProfitableWeapons\1.0\Assemblies\ProfitableWeapons.dll
 E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojAssemblyReference.cache
 E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csproj.CoreCompileInputs.cache
 E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
