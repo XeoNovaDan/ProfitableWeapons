@@ -81,6 +81,7 @@ namespace ProfitableWeapons
         public override void ExposeData()
         {
             Scribe_Values.Look(ref flagInventoryWeapons, "flagInventoryWeapons", true);
+            Scribe_Values.Look(ref nonLootedSellPriceMult, "nonLootedSellPriceMult", 1);
             Scribe_Values.Look(ref lootedSellPriceMult, "lootedSellPriceMult", 0.2f);
             Scribe_Values.Look(ref flagFromWellUsed, "flagFromWellUsed", true);
             Scribe_Values.Look(ref mendingRemoveLootedFlag, "mendingRemoveLootedFlag", true);
