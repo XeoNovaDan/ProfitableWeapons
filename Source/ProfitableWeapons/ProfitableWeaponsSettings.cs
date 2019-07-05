@@ -23,10 +23,12 @@ namespace ProfitableWeapons
 
         public static bool mendingRemoveLootedFlag = true;
 
+        public static bool nanoRepairRemoveLootedFlag = true;
+
         public void DoWindowContents(Rect wrect)
         {
-            Listing_Standard options = new Listing_Standard();
-            Color defaultColor = GUI.color;
+            var options = new Listing_Standard();
+            var defaultColor = GUI.color;
             options.Begin(wrect);
 
             GUI.color = defaultColor;
@@ -71,6 +73,23 @@ namespace ProfitableWeapons
                 options.Label("MendingIsNotActive".Translate());
                 GUI.color = defaultColor;
             }
+            options.Gap();
+
+            // Nano Repair Tech integration
+            Text.Font = GameFont.Medium;
+            options.Label("Nano Repair Tech");
+            Text.Font = GameFont.Small;
+            options.Gap(6);
+            if (ModCompatibilityCheck.Mending)
+            {
+                options.CheckboxLabeled("MendingRemoveLootedFlag".Translate(), ref nanoRepairRemoveLootedFlag, "NanoRepairTechRemoveLootedFlagToolTip".Translate());
+            }
+            else
+            {
+                GUI.color = Color.grey;
+                options.Label("NanoRepairTechIsNotActive".Translate());
+                GUI.color = defaultColor;
+            }
 
             options.End();
 
@@ -81,9 +100,11 @@ namespace ProfitableWeapons
         public override void ExposeData()
         {
             Scribe_Values.Look(ref flagInventoryWeapons, "flagInventoryWeapons", true);
+            Scribe_Values.Look(ref nonLootedSellPriceMult, "nonLootedSellPriceMult", 1);
             Scribe_Values.Look(ref lootedSellPriceMult, "lootedSellPriceMult", 0.2f);
             Scribe_Values.Look(ref flagFromWellUsed, "flagFromWellUsed", true);
             Scribe_Values.Look(ref mendingRemoveLootedFlag, "mendingRemoveLootedFlag", true);
+            Scribe_Values.Look(ref nanoRepairRemoveLootedFlag, "nanoRepairRemoveLootedFlag", true);
         }
 
     }
