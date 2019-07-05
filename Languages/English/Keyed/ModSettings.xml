@@ -19,4 +19,7 @@
     <MendingRemoveLootedFlag>Remove 'looted' tag from mended weapons</MendingRemoveLootedFlag>
     <MendingRemoveLootedFlagToolTip>When a weapon gets mended at a mending station, its 'looted' tag will be removed in a similar fashion to tainted apparel.</MendingRemoveLootedFlagToolTip>
 
+    <NanoRepairTechIsNotActive>Nano Repair Tech is currently not active.</NanoRepairTechIsNotActive>
+    <NanoRepairTechRemoveLootedFlagToolTip>When a weapon gets mended by nano repairing furniture, its 'looted' tag will be removed in a similar fashion to tainted apparel.</NanoRepairTechRemoveLootedFlagToolTip>
+
 </LanguageData>
