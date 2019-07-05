@@ -161,15 +161,16 @@ namespace ProfitableWeapons
             {
                 var instruction = instructionList[i];
 
-                // Look for the 'nop' instruction that immediately precedes 'bool flag11 = thing.HitPoints < thing.MaxHitPoints;'
-                if (!done &&
-                    instructionList[i + 1].opcode == OpCodes.Ldloc_S && ((LocalBuilder)instructionList[i + 1].operand).LocalIndex == 17 &&
-                    instructionList[i + 2].opcode == OpCodes.Callvirt && instructionList[i + 2].operand == hitPointsGetter)
+                // Add extra instructions after the 3rd nop when nano repairing weapons
+                if (!done && i >= 7 &&
+                    instructionList[i - 4].opcode == OpCodes.Stloc_3 &&
+                    instructionList[i - 5].opcode == OpCodes.Sub &&
+                    instructionList[i - 6].opcode == OpCodes.Ldc_I4_1 &&
+                    instructionList[i - 7].opcode == OpCodes.Ldloc_3)
                 {
-                    yield return instruction; // nop
                     yield return new CodeInstruction(OpCodes.Ldsfld, AccessTools.Field(typeof(ProfitableWeaponsSettings), "nanoRepairRemoveLootedFlag")); // ProfitableWeaponsSettings.nanoRepairRemoveLootedFlag
                     yield return new CodeInstruction(OpCodes.Ldloc_S, 17); // thing
-                    instruction = new CodeInstruction(OpCodes.Call, AccessTools.Method(patchType, nameof(RemoveUsedWeaponFlagNano))); // RemoveUsedWeaponFlagNano(ProfitableWeaponsSettings.nanoRepairRemoveLootedFlag, thing)
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(patchType, nameof(RemoveUsedWeaponFlagNano))); // RemoveUsedWeaponFlagNano(ProfitableWeaponsSettings.nanoRepairRemoveLootedFlag, thing)
                     done = true;
                 }
 
