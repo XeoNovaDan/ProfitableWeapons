@@ -8,43 +8,40 @@ using System.Runtime.CompilerServices;
 using RimWorld;
 using Verse;
 using Verse.AI;
-using Harmony;
+using HarmonyLib;
 
 namespace ProfitableWeapons
 {
     [StaticConstructorOnStartup]
-    static class HarmonyPatches
+    public static class HarmonyPatches
     {
 
         static readonly Type patchType = typeof(HarmonyPatches);
 
         static HarmonyPatches()
         {
-            HarmonyInstance h = HarmonyInstance.Create("XeoNovaDan.ProfitableWeapons");
-            //HarmonyInstance.DEBUG = true;
-
             // Do automatic patches
-            h.PatchAll();
+            ProfitableWeapons.harmonyInstance.PatchAll();
 
             // Manual patches
             var tryCastShotPostfix = new HarmonyMethod(patchType, nameof(Postfix_TryCastShot));
-            h.Patch(AccessTools.Method(typeof(Verb_LaunchProjectile), "TryCastShot"), postfix: tryCastShotPostfix);
-            h.Patch(AccessTools.Method(typeof(Verb_MeleeAttack), "TryCastShot"), postfix: tryCastShotPostfix);
+            ProfitableWeapons.harmonyInstance.Patch(AccessTools.Method(typeof(Verb_LaunchProjectile), "TryCastShot"), postfix: tryCastShotPostfix);
+            ProfitableWeapons.harmonyInstance.Patch(AccessTools.Method(typeof(Verb_MeleeAttack), "TryCastShot"), postfix: tryCastShotPostfix);
 
             // Try and patch Combat Extended
             if (ModCompatibilityCheck.CombatExtended)
             {
                 // Melee verb
-                var meleeVerbCE = GenTypes.GetTypeInAnyAssemblyNew("CombatExtended.Verb_MeleeAttackCE", null);
+                var meleeVerbCE = GenTypes.GetTypeInAnyAssembly("CombatExtended.Verb_MeleeAttackCE", null);
                 if (meleeVerbCE != null)
-                    h.Patch(AccessTools.Method(meleeVerbCE, "TryCastShot"), postfix: tryCastShotPostfix);
+                    ProfitableWeapons.harmonyInstance.Patch(AccessTools.Method(meleeVerbCE, "TryCastShot"), postfix: tryCastShotPostfix);
                 else
                     Log.Error("Profitable Weapons - Couldn't find CombatExtended.Verb_MeleeAttackCE type to patch");
 
                 // Ranged verb
-                var launchProjectileVerbCE = GenTypes.GetTypeInAnyAssemblyNew("CombatExtended.Verb_LaunchProjectileCE", null);
+                var launchProjectileVerbCE = GenTypes.GetTypeInAnyAssembly("CombatExtended.Verb_LaunchProjectileCE", null);
                 if (launchProjectileVerbCE != null)
-                    h.Patch(AccessTools.Method(launchProjectileVerbCE, "TryCastShot"), postfix: tryCastShotPostfix);
+                    ProfitableWeapons.harmonyInstance.Patch(AccessTools.Method(launchProjectileVerbCE, "TryCastShot"), postfix: tryCastShotPostfix);
                 else
                     Log.Error("Profitable Weapons - Couldn't find CombatExtended.Verb_LaunchProjectileCE type to patch");
             }
@@ -53,10 +50,10 @@ namespace ProfitableWeapons
             if (ModCompatibilityCheck.Mending)
             {
                 // Mending JobDriver
-                var mendingJobDriver = GenTypes.GetTypeInAnyAssemblyNew("MendAndRecycle.JobDriver_Mend", null);
+                var mendingJobDriver = GenTypes.GetTypeInAnyAssembly("MendAndRecycle.JobDriver_Mend", null);
                 if (mendingJobDriver != null)
                 {
-                    h.Patch(mendingJobDriver.GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Instance).First().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).MaxBy(mi => mi.GetMethodBody()?.GetILAsByteArray().Length ?? -1),
+                    ProfitableWeapons.harmonyInstance.Patch(mendingJobDriver.GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Instance).First().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).MaxBy(mi => mi.GetMethodBody()?.GetILAsByteArray().Length ?? -1),
                         transpiler: new HarmonyMethod(patchType, nameof(Transpile_MendAndReycle_JobDriver_Mend_MendToil_TickAction)));
                 }
                 else
@@ -67,41 +64,11 @@ namespace ProfitableWeapons
             if (ModCompatibilityCheck.NanoRepairTech)
             {
                 // Nano repairing
-                var nanoRepair = GenTypes.GetTypeInAnyAssemblyNew("Ogre.NanoRepairTech.NanoRepair", null);
+                var nanoRepair = GenTypes.GetTypeInAnyAssembly("Ogre.NanoRepairTech.NanoRepair", null);
                 if (nanoRepair != null)
-                    h.Patch(AccessTools.Method(nanoRepair, "ProcessTick"), transpiler: new HarmonyMethod(patchType, nameof(Transpile_NanoRepairTech_NanoRepair_ProcessTick)));
+                    ProfitableWeapons.harmonyInstance.Patch(AccessTools.Method(nanoRepair, "ProcessTick"), transpiler: new HarmonyMethod(patchType, nameof(Transpile_NanoRepairTech_NanoRepair_ProcessTick)));
                 else
                     Log.Error("Profitable Weapons - Couldn't find Ogre.NanoRepairTech.NanoRepair type to patch");
-            }
-
-        }
-
-        [HarmonyPatch(typeof(Pawn_InventoryTracker))]
-        [HarmonyPatch(nameof(Pawn_InventoryTracker.DropAllNearPawn))]
-        public static class Patch_Pawn_InventoryTracker_DropAllNearPawn
-        {
-
-            public static void Prefix(Pawn ___pawn, ref ThingOwner ___innerContainer)
-            {
-                // If set to flag inventory weapons as looted, go through each item that was in inventory and attempt to flag as looted
-                if (ProfitableWeaponsSettings.flagInventoryWeapons)
-                    foreach (Thing thing in ___innerContainer)
-                        if (thing.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
-                            lootedComp.CheckLootedWeapon(___pawn);
-            }
-
-        }
-
-        [HarmonyPatch(typeof(Pawn_EquipmentTracker))]
-        [HarmonyPatch(nameof(Pawn_EquipmentTracker.TryDropEquipment))]
-        public static class Patch_Pawn_EquipmentTracker_TryDropEquipment
-        {
-
-            public static void Postfix(Pawn ___pawn, ref ThingWithComps eq)
-            {
-                // Try to flag equipped weapon as looted
-                if (eq.TryGetComp<CompLootedWeapon>() is CompLootedWeapon lootedComp)
-                    lootedComp.CheckLootedWeapon(___pawn);
             }
 
         }
@@ -125,14 +92,14 @@ namespace ProfitableWeapons
         {
             var instructionList = instructions.ToList();
 
-            var removeDeadmanSettingFieldInfo = AccessTools.Field(GenTypes.GetTypeInAnyAssemblyNew("MendAndRecycle.Settings", null), "removesDeadman");
+            var removeDeadmanSettingFieldInfo = AccessTools.Field(GenTypes.GetTypeInAnyAssembly("MendAndRecycle.Settings", null), "removesDeadman");
 
             for (int i = 0; i < instructionList.Count; i++)
             {
                 var instruction = instructionList[i];
 
                 // If instruction checks for 'remove deadman' setting, add call to our helper method before it
-                if (instruction.opcode == OpCodes.Ldsfld && instruction.operand == removeDeadmanSettingFieldInfo)
+                if (instruction.opcode == OpCodes.Ldsfld && (FieldInfo)instruction.operand == removeDeadmanSettingFieldInfo)
                 {
                     yield return new CodeInstruction(OpCodes.Ldsfld, AccessTools.Field(typeof(ProfitableWeaponsSettings), "mendingRemoveLootedFlag")); // ProfitableWeaponsSettings.mendingRemoveLootedFlag
                     yield return new CodeInstruction(OpCodes.Ldloc_0); // thing

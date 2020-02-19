@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using RimWorld;
 using Verse;
-using Harmony;
+using HarmonyLib;
 using UnityEngine;
-using SettingsHelper;
 
 namespace ProfitableWeapons
 {
@@ -45,14 +44,18 @@ namespace ProfitableWeapons
             options.Gap();
 
             // Non-looted sell price multiplier
-            options.AddLabeledSlider("SettingNonLootedSellMult".Translate(), ref nonLootedSellPriceMult, 0, 1, rightAlignedLabel: nonLootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
+            nonLootedSellPriceMult = Widgets.HorizontalSlider(options.GetRect(12), nonLootedSellPriceMult, 0, 1,
+                label: "SettingNonLootedSellMultNote".Translate(), rightAlignedLabel: nonLootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
+            options.Gap(12);
             Text.Font = GameFont.Tiny;
             options.Label("SettingNonLootedSellMultNote".Translate());
             Text.Font = GameFont.Small;
             options.Gap();
 
             // Looted sell price multiplier
-            options.AddLabeledSlider("SettingLootedSellMult".Translate(), ref lootedSellPriceMult, 0, 1, rightAlignedLabel: lootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
+            lootedSellPriceMult = Widgets.HorizontalSlider(options.GetRect(12), lootedSellPriceMult, 0, 1,
+                label: "SettingLootedSellMult".Translate(), rightAlignedLabel: lootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
+            options.Gap(12);
             Text.Font = GameFont.Tiny;
             options.Label("SettingLootedSellMultNote".Translate((nonLootedSellPriceMult * lootedSellPriceMult).ToStringPercent()));
             Text.Font = GameFont.Small;
@@ -109,20 +112,4 @@ namespace ProfitableWeapons
 
     }
 
-    public class ProfitableWeapons : Mod
-    {
-        public ProfitableWeaponsSettings settings;
-
-        public ProfitableWeapons(ModContentPack content) : base(content)
-        {
-            GetSettings<ProfitableWeaponsSettings>();
-        }
-
-        public override string SettingsCategory() => "ProfitableWeaponsSettingsCategory".Translate();
-
-        public override void DoSettingsWindowContents(Rect inRect)
-        {
-            GetSettings<ProfitableWeaponsSettings>().DoWindowContents(inRect);
-        }
-    }
 }

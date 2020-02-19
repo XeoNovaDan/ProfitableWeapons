@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <LanguageData>
 
-    <StatsReport_IsLootedWeapon>Looted</StatsReport_IsLootedWeapon>
+    <StatsReport_IsLootedWeapon>Used</StatsReport_IsLootedWeapon>
 
 </LanguageData>

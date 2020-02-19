@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using RimWorld;
 using Verse;
-using Harmony;
+using HarmonyLib;
 
 namespace ProfitableWeapons
 {
@@ -28,6 +28,13 @@ namespace ProfitableWeapons
                 attackCounter += (verb.EquipmentSource.def.IsRangedWeapon && verb.IsMeleeAttack) ? verb.EquipmentSource.def.Verbs[0].burstShotCount : 1;
         }
 
+        public override string TransformLabel(string label)
+        {
+            if (IsUsedWeapon)
+                label += " (" + "LootedWeaponChar".Translate() + ")";
+            return label;
+        }
+
         public void CheckLootedWeapon(Pawn pawn)
         {
             if (pawn.Faction != null && !pawn.Faction.IsPlayer)
@@ -43,13 +50,6 @@ namespace ProfitableWeapons
         {
             isLootedWeaponInt = false;
             attackCounter = 0;
-        }
-
-        public override string TransformLabel(string label)
-        {
-            if (IsUsedWeapon)
-                label += " (" + "LootedWeaponChar".Translate() + ")";
-            return label;
         }
 
         public override void PostExposeData()
