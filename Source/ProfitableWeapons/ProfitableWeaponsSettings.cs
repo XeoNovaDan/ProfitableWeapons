@@ -12,6 +12,8 @@ namespace ProfitableWeapons
     public class ProfitableWeaponsSettings : ModSettings
     {
 
+        private const int SliderRectHeight = 18;
+
         public static bool flagInventoryWeapons = true;
 
         public static bool flagFromWellUsed = true;
@@ -41,21 +43,19 @@ namespace ProfitableWeapons
 
             // Flag well-used weapons
             options.CheckboxLabeled("SettingFlagWellUsedWeapons".Translate(), ref flagFromWellUsed, "SettingFlagWellUsedWeaponsToolTip".Translate());
-            options.Gap();
+            options.Gap(12 + SliderRectHeight);
 
             // Non-looted sell price multiplier
-            nonLootedSellPriceMult = Widgets.HorizontalSlider(options.GetRect(12), nonLootedSellPriceMult, 0, 1,
-                label: "SettingNonLootedSellMultNote".Translate(), rightAlignedLabel: nonLootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
-            options.Gap(12);
+            nonLootedSellPriceMult = Widgets.HorizontalSlider(options.GetRect(SliderRectHeight), nonLootedSellPriceMult, 0, 1,
+                leftAlignedLabel: "SettingNonLootedSellMult".Translate(), rightAlignedLabel: nonLootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
             Text.Font = GameFont.Tiny;
             options.Label("SettingNonLootedSellMultNote".Translate());
             Text.Font = GameFont.Small;
-            options.Gap();
+            options.Gap(12 + SliderRectHeight);
 
             // Looted sell price multiplier
-            lootedSellPriceMult = Widgets.HorizontalSlider(options.GetRect(12), lootedSellPriceMult, 0, 1,
-                label: "SettingLootedSellMult".Translate(), rightAlignedLabel: lootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
-            options.Gap(12);
+            lootedSellPriceMult = Widgets.HorizontalSlider(options.GetRect(SliderRectHeight), lootedSellPriceMult, 0, 1,
+                leftAlignedLabel: "SettingLootedSellMult".Translate(), rightAlignedLabel: lootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
             Text.Font = GameFont.Tiny;
             options.Label("SettingLootedSellMultNote".Translate((nonLootedSellPriceMult * lootedSellPriceMult).ToStringPercent()));
             Text.Font = GameFont.Small;
