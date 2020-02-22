@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using RimWorld;
 using Verse;
-using Harmony;
+using HarmonyLib;
 using UnityEngine;
-using SettingsHelper;
 
 namespace ProfitableWeapons
 {
     public class ProfitableWeaponsSettings : ModSettings
     {
+
+        private const int SliderRectHeight = 18;
 
         public static bool flagInventoryWeapons = true;
 
@@ -42,17 +43,19 @@ namespace ProfitableWeapons
 
             // Flag well-used weapons
             options.CheckboxLabeled("SettingFlagWellUsedWeapons".Translate(), ref flagFromWellUsed, "SettingFlagWellUsedWeaponsToolTip".Translate());
-            options.Gap();
+            options.Gap(12 + SliderRectHeight);
 
             // Non-looted sell price multiplier
-            options.AddLabeledSlider("SettingNonLootedSellMult".Translate(), ref nonLootedSellPriceMult, 0, 1, rightAlignedLabel: nonLootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
+            nonLootedSellPriceMult = Widgets.HorizontalSlider(options.GetRect(SliderRectHeight), nonLootedSellPriceMult, 0, 1,
+                leftAlignedLabel: "SettingNonLootedSellMult".Translate(), rightAlignedLabel: nonLootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
             Text.Font = GameFont.Tiny;
             options.Label("SettingNonLootedSellMultNote".Translate());
             Text.Font = GameFont.Small;
-            options.Gap();
+            options.Gap(12 + SliderRectHeight);
 
             // Looted sell price multiplier
-            options.AddLabeledSlider("SettingLootedSellMult".Translate(), ref lootedSellPriceMult, 0, 1, rightAlignedLabel: lootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
+            lootedSellPriceMult = Widgets.HorizontalSlider(options.GetRect(SliderRectHeight), lootedSellPriceMult, 0, 1,
+                leftAlignedLabel: "SettingLootedSellMult".Translate(), rightAlignedLabel: lootedSellPriceMult.ToStringPercent(), roundTo: 0.01f);
             Text.Font = GameFont.Tiny;
             options.Label("SettingLootedSellMultNote".Translate((nonLootedSellPriceMult * lootedSellPriceMult).ToStringPercent()));
             Text.Font = GameFont.Small;
@@ -109,20 +112,4 @@ namespace ProfitableWeapons
 
     }
 
-    public class ProfitableWeapons : Mod
-    {
-        public ProfitableWeaponsSettings settings;
-
-        public ProfitableWeapons(ModContentPack content) : base(content)
-        {
-            GetSettings<ProfitableWeaponsSettings>();
-        }
-
-        public override string SettingsCategory() => "ProfitableWeaponsSettingsCategory".Translate();
-
-        public override void DoSettingsWindowContents(Rect inRect)
-        {
-            GetSettings<ProfitableWeaponsSettings>().DoWindowContents(inRect);
-        }
-    }
 }
