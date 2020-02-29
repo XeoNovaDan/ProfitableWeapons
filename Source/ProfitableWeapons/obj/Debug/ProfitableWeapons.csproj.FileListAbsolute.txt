@@ -1,8 +1,0 @@
-E:\Documents\GitHub\ProfitableWeapons\1.0\Assemblies\ProfitableWeapons.dll
-E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojAssemblyReference.cache
-E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csproj.CoreCompileInputs.cache
-E:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
-D:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csprojAssemblyReference.cache
-D:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.dll
-D:\Documents\GitHub\ProfitableWeapons\1.1\Assemblies\ProfitableWeapons.dll
-D:\Documents\GitHub\ProfitableWeapons\Source\ProfitableWeapons\obj\Debug\ProfitableWeapons.csproj.CopyComplete
