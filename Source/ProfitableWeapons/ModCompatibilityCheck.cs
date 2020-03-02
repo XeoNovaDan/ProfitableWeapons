@@ -12,11 +12,26 @@ namespace ProfitableWeapons
     public class ModCompatibilityCheck
     {
 
-        public static bool CombatExtended = ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "Combat Extended");
+        static ModCompatibilityCheck()
+        {
+            var activeMods = ModsConfig.ActiveModsInLoadOrder.ToList();
+            for (int i = 0; i < activeMods.Count; i++)
+            {
+                var curMod = activeMods[i];
+                if (curMod.Name == "Combat Extended")
+                    CombatExtended = true;
+                else if (curMod.Name == "MendAndRecycle")
+                    Mending = true;
+                else if (curMod.Name == "Nano Repair Tech")
+                    NanoRepairTech = true;
+            }
+        }
 
-        public static bool Mending = ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "MendAndRecycle");
+        public static bool CombatExtended;
 
-        public static bool NanoRepairTech = ModsConfig.ActiveModsInLoadOrder.Any(m => m.Name == "Nano Repair Tech");
+        public static bool Mending;
+
+        public static bool NanoRepairTech;
 
     }
 }

@@ -20,6 +20,10 @@ namespace ProfitableWeapons
 
         static HarmonyPatches()
         {
+            #if DEBUG
+                Harmony.DEBUG = true; 
+            #endif
+
             // Do automatic patches
             ProfitableWeapons.harmonyInstance.PatchAll();
 
@@ -90,6 +94,10 @@ namespace ProfitableWeapons
         // MendAndRecycle
         public static IEnumerable<CodeInstruction> Transpile_MendAndReycle_JobDriver_Mend_MendToil_TickAction(IEnumerable<CodeInstruction> instructions)
         {
+            #if DEBUG
+                Log.Message("Transpiler start: Transpile_MendAndReycle.JobDriver_Mend.MendToil.TickAction (1 match)");
+            #endif
+
             var instructionList = instructions.ToList();
 
             var removeDeadmanSettingFieldInfo = AccessTools.Field(GenTypes.GetTypeInAnyAssembly("MendAndRecycle.Settings", null), "removesDeadman");
@@ -99,8 +107,12 @@ namespace ProfitableWeapons
                 var instruction = instructionList[i];
 
                 // If instruction checks for 'remove deadman' setting, add call to our helper method before it
-                if (instruction.opcode == OpCodes.Ldsfld && (FieldInfo)instruction.operand == removeDeadmanSettingFieldInfo)
+                if (instruction.opcode == OpCodes.Ldsfld && instruction.OperandIs(removeDeadmanSettingFieldInfo))
                 {
+                    #if DEBUG
+                        Log.Message("Transpile_MendAndReycle.JobDriver_Mend.MendToil.TickAction match 1 of 1");
+                    #endif
+
                     yield return new CodeInstruction(OpCodes.Ldsfld, AccessTools.Field(typeof(ProfitableWeaponsSettings), "mendingRemoveLootedFlag")); // ProfitableWeaponsSettings.mendingRemoveLootedFlag
                     yield return new CodeInstruction(OpCodes.Ldloc_0); // thing
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(patchType, nameof(RemoveUsedWeaponFlag))); // RemoveUsedWeaponFlag(ProfitableWeaponsSettings.mendingRemoveLootedFlag, thing)
@@ -119,6 +131,10 @@ namespace ProfitableWeapons
         // Nano Repair Tech
         public static IEnumerable<CodeInstruction> Transpile_NanoRepairTech_NanoRepair_ProcessTick(IEnumerable<CodeInstruction> instructions)
         {
+            #if DEBUG
+                Log.Message("Transpiler start: Transpile_NanoRepairTech.NanoRepair.ProcessTick (1 match)");
+            #endif
+
             var instructionList = instructions.ToList();
             bool done = false;
 
@@ -135,6 +151,10 @@ namespace ProfitableWeapons
                     instructionList[i - 6].opcode == OpCodes.Ldc_I4_1 &&
                     instructionList[i - 7].opcode == OpCodes.Ldloc_3)
                 {
+                    #if DEBUG
+                        Log.Message("Transpile_NanoRepairTech.NanoRepair.ProcessTick match 1 of 1");
+                    #endif
+
                     yield return new CodeInstruction(OpCodes.Ldsfld, AccessTools.Field(typeof(ProfitableWeaponsSettings), "nanoRepairRemoveLootedFlag")); // ProfitableWeaponsSettings.nanoRepairRemoveLootedFlag
                     yield return new CodeInstruction(OpCodes.Ldloc_S, 17); // thing
                     yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(patchType, nameof(RemoveUsedWeaponFlagNano))); // RemoveUsedWeaponFlagNano(ProfitableWeaponsSettings.nanoRepairRemoveLootedFlag, thing)
