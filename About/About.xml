@@ -8,7 +8,7 @@
 		<li>1.0</li>
 		<li>1.1</li>
 	</supportedVersions>
-	<description>Current Version: v1.2.9 (29th February 2020)\n\nMakes weapon production profitable while still not breaking the overall balance of raider weapons. Configurable through mod settings.</description>
+	<description>Current Version: v1.2.9.1 (2nd March 2020)\n\nMakes weapon production profitable while still not breaking the overall balance of raider weapons. Configurable through mod settings.</description>
 	<modDependencies>
 		<li>
 			<packageId>brrainz.harmony</packageId>
