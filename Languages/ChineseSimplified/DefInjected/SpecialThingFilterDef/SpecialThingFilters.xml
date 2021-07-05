@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <AllowNonLootedWeapons.label>允许非赃物武器</AllowNonLootedWeapons.label>
+  <AllowNonLootedWeapons.description>允许不带有(L)标签的武器。(L是赃物的缩写)</AllowNonLootedWeapons.description>
+
+  <AllowLootedWeapons.label>允许赃物武器</AllowLootedWeapons.label>
+  <AllowLootedWeapons.description>允许带有(L)标签的武器。(L是赃物的缩写)</AllowLootedWeapons.description>
+
+</LanguageData>

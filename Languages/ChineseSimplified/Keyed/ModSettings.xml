@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <ProfitableWeaponsSettingsCategory>武器交易改良</ProfitableWeaponsSettingsCategory>
+
+  <SettingFlagInventoryWeapons>标记从货物栏掉落的武器</SettingFlagInventoryWeapons>
+  <SettingFlagInventoryWeaponsToolTip>若启用此项，从非玩家生物的货物栏（如：作战补给商）中掉落的武器将被标记为“赃物”。</SettingFlagInventoryWeaponsToolTip>
+
+  <SettingFlagWellUsedWeapons>标记已使用过的武器</SettingFlagWellUsedWeapons>
+  <SettingFlagWellUsedWeaponsToolTip>若启用此项，武器在进行20次完整的攻击（含远程开火和近战使用）后掉落将被标记为“赃物”。</SettingFlagWellUsedWeaponsToolTip>
+
+  <SettingNonLootedSellMult>非赃物出售价比例</SettingNonLootedSellMult>
+  <SettingNonLootedSellMultNote>注：需要重启游戏以生效。（非赃物出售价 = 武器价值 × 设定比例）</SettingNonLootedSellMultNote>
+
+  <SettingLootedSellMult>赃物出售价比例</SettingLootedSellMult>
+  <SettingLootedSellMultNote>注：赃物出售价 = 非赃物出售价 × 设定比例。当前赃物出售价比例： {0}</SettingLootedSellMultNote>
+
+  <MendingIsNotActive>修补和回收(MendAndRecycle)模组当前未启用。</MendingIsNotActive>
+  <MendingRemoveLootedFlag>维修后移除武器的“赃物”标签</MendingRemoveLootedFlag>
+  <MendingRemoveLootedFlagToolTip>当武器在修补工作台维修后，与移除“死者衣物”标签的方式类似，其“赃物”标签将被移除。</MendingRemoveLootedFlagToolTip>
+
+  <NanoRepairTechIsNotActive>纳米维修科技(Nano Repair Tech)模组当前未启用。</NanoRepairTechIsNotActive>
+  <NanoRepairTechRemoveLootedFlagToolTip>当武器经纳米维修设备维修后，与移除“死者衣物”标签的方式类似，其“赃物”标签将被移除。</NanoRepairTechRemoveLootedFlagToolTip>
+
+</LanguageData>
